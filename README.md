@@ -4,7 +4,7 @@
 [![iOS](https://img.shields.io/badge/iOS-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/ios/)
 [![Bluetooth](https://img.shields.io/badge/Bluetooth-0082FC?style=flat-square&logo=bluetooth&logoColor=white)](https://developer.apple.com/documentation/corebluetooth)
 
-Native iOS application for the **[Re-Leva](https://github.com/maknig/re-leva.git)** espresso machine project. This app leverages Bluetooth Low Energy (BLE) to interface with the hardware, enabling real-time thermal monitoring and remote PID setpoint control using a modern SwiftUI architecture.
+Native iOS application for the **[ReLeva](https://github.com/maknig/re-leva.git)** espresso machine project. This app leverages Bluetooth Low Energy (BLE) to interface with the hardware, enabling real-time thermal monitoring and remote PID setpoint control using a modern SwiftUI architecture.
 
 
 ## Features
