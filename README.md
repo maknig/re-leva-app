@@ -4,39 +4,73 @@
 [![iOS](https://img.shields.io/badge/iOS-000000?style=flat-square&logo=apple&logoColor=white)](https://www.apple.com/ios/)
 [![Bluetooth](https://img.shields.io/badge/Bluetooth-0082FC?style=flat-square&logo=bluetooth&logoColor=white)](https://developer.apple.com/documentation/corebluetooth)
 
-Native iOS application for the **[Re-Leva](https://github.com/maknig/re-leva-app.git)** espresso machine project. It uses Bluetooth Low Energy (BLE) to interface with the machine's hardware for real-time thermal management and monitoring.
+Native iOS application for the **[Re-Leva](https://github.com/maknig/re-leva-app.git)** espresso machine project. This app leverages Bluetooth Low Energy (BLE) to interface with the hardware, enabling real-time thermal monitoring and remote PID setpoint control using a modern SwiftUI architecture.
+
+
+## Features
+
+- **BLE Communication**: Seamless scanning and pairing with the Re-Leva espresso machine.
+- **MVVM Architecture**: Clean separation of concerns between Bluetooth logic, Data Models, and User Interface.
+- **Real-time Telemetry**: Live display of coffee and steam boiler temperatures.
+- **Dynamic Charts**: Interactive SwiftUI Charts rendering the last 60 seconds of temperature data.
+- **PID Control**: Set target temperatures directly from the interface.
+
+
+## Tech Stack
+
+- **Language**: Swift 5.x
+- **UI Framework**: SwiftUI
+- **Visualization**: SwiftUI Charts
+- **Hardware Protocol**: CoreBluetooth (BLE)
+- **Architecture**: MVVM (Model-View-ViewModel)
 
 ---
 
-## 🚀 Features
+## 📋 Prerequisites
 
-- **BLE Connectivity**: Scan and pair with the Re-Leva coffee machine.
-- **Live Temperature**: Real-time monitoring of the boiler/group head temperature.
-- **Target Control**: Set and update the target temperature (PID setpoint) directly from the app.
-- **Native UI**: Built with SwiftUI for low-latency updates and responsive control.
+Before you begin, ensure you have the following installed on your macOS machine:
 
-## 🛠 Tech Stack
+- **Xcode**: Version 15.0 or later.
+- **iOS Simulator**: iOS 15.0 or later (Note: Bluetooth requires a physical device).
+- **Swift**: Included with Xcode.
 
-- **Language**: Swift 5
-- **UI Framework**: SwiftUI
-- **Hardware Communication**: CoreBluetooth (BLE)
-- **Architecture**: MVVM
+---
 
-## 📦 Setup
+## Getting Started
 
-1.  **Clone the repository**
-    ```bash
-    git clone [https://github.com/maknig/re-leva-app.git](https://github.com/maknig/re-leva-app.git)
-    ```
-2.  **Open in Xcode**
-    ```bash
-    open ReLeva.xcodeproj
-    ```
-3.  **Run**
-    Select a physical iPhone (required for Bluetooth) and press `Cmd + R`.
+### 1. Clone the Repository
 
-## 📂 Project Structure
+```bash
+git clone https://github.com/maknig/re-leva-app.git
+cd re-leva-app
+```
 
-- `BluetoothManager.swift`: Handles the `CBCentralManager` logic, scanning, and peripheral communication.
-- `ContentView.swift`: Main dashboard for temperature display and slider controls.
-- `TemperatureViewModel.swift`: Bridges the Bluetooth data to the SwiftUI views.
+### 2. Open in Xcode
+
+```bash
+open re_leva-app.xcodeproj
+```
+
+### 3. Configure Permissions
+
+Go to your **Project Target** -> **Info** tab and add the following keys to `Info.plist`:
+
+- `NSBluetoothAlwaysUsageDescription`: "This app uses Bluetooth to connect to your espresso machine."
+- `NSBluetoothPeripheralUsageDescription`: "This app uses Bluetooth to connect to your espresso machine."
+
+### 4. Run the App
+
+- Select a physical **iPhone** device from the device dropdown.
+- Press `Cmd + R` to build and run.
+
+---
+
+## Project Structure
+
+The application follows a strict MVVM architecture to ensure maintainability and performance:
+
+- **`re_leva_appApp.swift`**: The App lifecycle entry point. Manages the `@StateObject` for the Bluetooth Manager.
+- **`BluetoothManager.swift`**: The ViewModel and Bluetooth Protocol implementation. It handles `CBCentralManager` state, peripheral discovery, and data parsing. It acts as the bridge between hardware data and the UI.
+- **`ContentView.swift`**: The main container layout, combining the Chart view and the Target controls in a clean navigation stack.
+- **`LineChartView.swift`**: A custom SwiftUI view that consumes `BluetoothManager` data and renders live line charts using the `Charts` framework.
+- **`SetTargetView.swift`**: A dedicated view for user input, handling integer conversion and writing the target setpoint back to the Bluetooth characteristic.
